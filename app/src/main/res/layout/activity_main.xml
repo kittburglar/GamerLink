@@ -6,14 +6,14 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:id="@+id/pc"
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:background="#D38A35">
 
             <TextView
@@ -27,12 +27,16 @@
                 android:textColor="#FFFFFF" />
 
             <ExpandableListView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:id="@+id/steam"
                 android:background="#F39B28"
                 android:layout_margin="10dp"
-                android:textFilterEnabled="false" />
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:childDivider="#FFFFFF"
+                android:groupIndicator="@null"
+                />
 
             <ExpandableListView
                 android:layout_width="fill_parent"
@@ -40,14 +44,18 @@
                 android:id="@+id/origin"
                 android:background="#F39B28"
                 android:layout_margin="10dp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:childDivider="#FFFFFF"
+                android:groupIndicator="@null" />
 
             <ExpandableListView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/other"
                 android:background="#F39B28"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:childDivider="#FFFFFF"
+                android:groupIndicator="@null" />
 
         </LinearLayout>
 
@@ -73,7 +81,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ps4"
                 android:layout_margin="10dp"
-                android:background="#048CD4" />
+                android:background="#048CD4"
+                android:childDivider="#FFFFFF"
+                android:groupIndicator="@null" />
 
         </LinearLayout>
 
@@ -99,7 +109,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/xboxone"
                 android:layout_margin="10dp"
-                android:background="#3caf58" />
+                android:background="#3caf58"
+                android:childDivider="#FFFFFF"
+                android:groupIndicator="@null" />
 
         </LinearLayout>
 
@@ -123,9 +135,22 @@
             <ExpandableListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/expandableListView4"
+                android:id="@+id/macsteam"
                 android:layout_margin="10dp"
-                android:background="#C82D3B" />
+                android:background="#C82D3B"
+                android:headerDividersEnabled="true"
+                android:childDivider="#FFFFFF"
+                android:groupIndicator="@null" />
+
+            <ExpandableListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/macother"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="10dp"
+                android:background="#C82D3B"
+                android:childDivider="#FFFFFF"
+                android:groupIndicator="@null" />
 
         </LinearLayout>
     </LinearLayout>
