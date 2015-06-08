@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
@@ -26,7 +27,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import it.moondroid.coverflow.components.ui.containers.FeatureCoverFlow;
+
 
 public class MainActivity extends Activity {
 
@@ -42,12 +43,12 @@ public class MainActivity extends Activity {
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
+    //private CoverFlowAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // get the listview
         steamExpListView = (ExpandableListView) findViewById(R.id.steam);
 
@@ -60,15 +61,43 @@ public class MainActivity extends Activity {
         steamExpListView.setAdapter(listAdapter);
 
 
+        final Runnable mUpdateUITimerTaskSteam = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setText("All Games");
+                textHeader.setGravity(Gravity.LEFT);
+                textHeader.setTextSize(18);
+
+            }
+        };
+        final Runnable mUpdateUITimerTaskSteam2 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setText("View All");
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setTextSize(14);
+            }
+        };
+        final Handler mHandler = new Handler();
+
+
         // Listview Group click listener
         steamExpListView.setOnGroupClickListener(new OnGroupClickListener() {
 
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v,
                                         int groupPosition, long id) {
-                // Toast.makeText(getApplicationContext(),
-                // "Group Clicked " + listDataHeader.get(groupPosition),
-                // Toast.LENGTH_SHORT).show();
+                /*
+                 Toast.makeText(getApplicationContext(),
+                 "Group Clicked " + listDataHeader.get(groupPosition),
+                 Toast.LENGTH_SHORT).show();
+                 */
+                //TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+
                 return false;
             }
         });
@@ -80,18 +109,12 @@ public class MainActivity extends Activity {
             public void onGroupExpand(int groupPosition) {
 
 
-                Toast.makeText(getApplicationContext(),
-                        listDataHeader.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),
+                       // listDataHeader.get(groupPosition) + " Expanded",
+                        //Toast.LENGTH_SHORT).show();
 
                 setListViewHeightBasedOnItems(steamExpListView);
-
-
-                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-                textHeader.setText("View All");
-                textHeader.postInvalidate();
-
+                mHandler.postDelayed(mUpdateUITimerTaskSteam, 500);
                 originExpListView.collapseGroup(0);
                 otherExpListView.collapseGroup(0);
                 ps4ExpListView.collapseGroup(0);
@@ -114,25 +137,8 @@ public class MainActivity extends Activity {
                     listDataHeader.get(groupPosition) + " Collapsed",
                     Toast.LENGTH_SHORT).show();
             */
-
-                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.LEFT);
-                textHeader.setTextSize(18);
-                //textHeader.setPadding(35, 10, 0, 10);
-                textHeader.setText("All Games");
-
-
                 setListViewHeightBasedOnItems(steamExpListView);
-
-            /*
-            TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
-            textHeader.setTypeface(null, Typeface.BOLD);
-            textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-            textHeader.setText("View All");
-            textHeader.postInvalidate();
-            */
-
-
+                mHandler.postDelayed(mUpdateUITimerTaskSteam2, 500);
                 return;
             }
         });
@@ -144,14 +150,14 @@ public class MainActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
-                Toast.makeText(
-                        getApplicationContext(),
-                        listDataHeader.get(groupPosition)
-                                + " : "
-                                + listDataChild.get(
-                                listDataHeader.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
+                //Toast.makeText(
+                //        getApplicationContext(),
+               //         listDataHeader.get(groupPosition)
+               //                + " : "
+               //                 + listDataChild.get(
+                //                listDataHeader.get(groupPosition)).get(
+                //                childPosition), Toast.LENGTH_SHORT)
+                //        .show();
                 return false;
             }
         });
@@ -168,6 +174,37 @@ public class MainActivity extends Activity {
         // setting list adapter
         originExpListView.setAdapter(listAdapter);
 
+        final Runnable mUpdateUITimerTaskOrigin = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) originExpListView.findViewById(R.id.textView5);
+                textHeader.setText("All Games");
+                textHeader.setGravity(Gravity.LEFT);
+                textHeader.setTextSize(18);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
+        final Runnable mUpdateUITimerTaskOrigin2 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) originExpListView.findViewById(R.id.textView5);
+                textHeader.setText("View All");
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setTextSize(14);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
+        //final Handler mHandler = new Handler();
 
         // Listview Group click listener
         originExpListView.setOnGroupClickListener(new OnGroupClickListener() {
@@ -188,18 +225,15 @@ public class MainActivity extends Activity {
             @Override
             public void onGroupExpand(int groupPosition) {
 
-
+/*
                 Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Expanded",
                         Toast.LENGTH_SHORT).show();
-
+*/
                 setListViewHeightBasedOnItems(originExpListView);
 
 
-                TextView textHeader = (TextView) originExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-                textHeader.setText("View All");
-                textHeader.postInvalidate();
+                mHandler.postDelayed(mUpdateUITimerTaskOrigin, 500);
 
                 steamExpListView.collapseGroup(0);
                 otherExpListView.collapseGroup(0);
@@ -224,14 +258,11 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
             */
 
-                TextView textHeader = (TextView) originExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.LEFT);
-                textHeader.setTextSize(18);
-                //textHeader.setPadding(35, 10, 0, 10);
-                textHeader.setText("All Games");
+
 
 
                 setListViewHeightBasedOnItems(originExpListView);
+                mHandler.postDelayed(mUpdateUITimerTaskOrigin2, 500);
 
             /*
             TextView textHeader = (TextView)originExpListView.findViewById(R.id.textView5);
@@ -253,6 +284,7 @@ public class MainActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
+               /*
                 Toast.makeText(
                         getApplicationContext(),
                         listDataHeader.get(groupPosition)
@@ -261,6 +293,7 @@ public class MainActivity extends Activity {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                        */
                 return false;
             }
         });
@@ -279,6 +312,36 @@ public class MainActivity extends Activity {
         // setting list adapter
         otherExpListView.setAdapter(listAdapter);
 
+        final Runnable mUpdateUITimerTaskOther = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) otherExpListView.findViewById(R.id.textView5);
+                textHeader.setText("All Games");
+                textHeader.setGravity(Gravity.LEFT);
+                textHeader.setTextSize(18);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
+        final Runnable mUpdateUITimerTaskOther2 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) otherExpListView.findViewById(R.id.textView5);
+                textHeader.setText("View All");
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setTextSize(14);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
 
         // Listview Group click listener
         otherExpListView.setOnGroupClickListener(new OnGroupClickListener() {
@@ -299,18 +362,15 @@ public class MainActivity extends Activity {
             @Override
             public void onGroupExpand(int groupPosition) {
 
-
+                /*
                 Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Expanded",
                         Toast.LENGTH_SHORT).show();
-
+                */
                 setListViewHeightBasedOnItems(otherExpListView);
 
 
-                TextView textHeader = (TextView)otherExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-                textHeader.setText("View All");
-                textHeader.postInvalidate();
+                mHandler.postDelayed(mUpdateUITimerTaskOther, 500);
 
                 steamExpListView.collapseGroup(0);
                 originExpListView.collapseGroup(0);
@@ -335,15 +395,11 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
             */
 
-                TextView textHeader = (TextView)otherExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.LEFT);
-                textHeader.setTextSize(18);
-                //textHeader.setPadding(35, 10, 0, 10);
-                textHeader.setText("All Games");
+               // mHandler2.postDelayed(mUpdateUITimerTask2, 10);
 
 
                 setListViewHeightBasedOnItems(otherExpListView);
-
+                mHandler.postDelayed(mUpdateUITimerTaskOther2, 500);
             /*
             TextView textHeader = (TextView)otherExpListView.findViewById(R.id.textView5);
             textHeader.setTypeface(null, Typeface.BOLD);
@@ -364,6 +420,7 @@ public class MainActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
+                /*
                 Toast.makeText(
                         getApplicationContext(),
                         listDataHeader.get(groupPosition)
@@ -372,6 +429,7 @@ public class MainActivity extends Activity {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                        */
                 return false;
             }
         });
@@ -388,6 +446,36 @@ public class MainActivity extends Activity {
         // setting list adapter
         ps4ExpListView.setAdapter(listAdapter);
 
+        final Runnable mUpdateUITimerTaskPs4 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) ps4ExpListView.findViewById(R.id.textView5);
+                textHeader.setText("All Games");
+                textHeader.setGravity(Gravity.LEFT);
+                textHeader.setTextSize(18);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
+        final Runnable mUpdateUITimerTaskPs42 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) ps4ExpListView.findViewById(R.id.textView5);
+                textHeader.setText("View All");
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setTextSize(14);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
 
         // Listview Group click listener
         ps4ExpListView.setOnGroupClickListener(new OnGroupClickListener() {
@@ -416,10 +504,7 @@ public class MainActivity extends Activity {
                 setListViewHeightBasedOnItems(ps4ExpListView);
 
 
-                TextView textHeader = (TextView)ps4ExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-                textHeader.setText("View All");
-                textHeader.postInvalidate();
+                mHandler.postDelayed(mUpdateUITimerTaskPs4, 500);
 
                 steamExpListView.collapseGroup(0);
                 originExpListView.collapseGroup(0);
@@ -444,14 +529,11 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
             */
 
-                TextView textHeader = (TextView)ps4ExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.LEFT);
-                textHeader.setTextSize(18);
-                //textHeader.setPadding(35, 10, 0, 10);
-                textHeader.setText("All Games");
+                //mHandler2.postDelayed(mUpdateUITimerTask2, 10);
 
 
                 setListViewHeightBasedOnItems(ps4ExpListView);
+                mHandler.postDelayed(mUpdateUITimerTaskPs42,500);
 
             /*
             TextView textHeader = (TextView)ps4ExpListView.findViewById(R.id.textView5);
@@ -473,6 +555,7 @@ public class MainActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
+                /*
                 Toast.makeText(
                         getApplicationContext(),
                         listDataHeader.get(groupPosition)
@@ -481,6 +564,7 @@ public class MainActivity extends Activity {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                        */
                 return false;
             }
         });
@@ -496,6 +580,37 @@ public class MainActivity extends Activity {
 
         // setting list adapter
         xboxoneExpListView.setAdapter(listAdapter);
+
+        final Runnable mUpdateUITimerTaskXbox = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) xboxoneExpListView.findViewById(R.id.textView5);
+                textHeader.setText("All Games");
+                textHeader.setGravity(Gravity.LEFT);
+                textHeader.setTextSize(18);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
+        final Runnable mUpdateUITimerTaskXbox2 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) xboxoneExpListView.findViewById(R.id.textView5);
+                textHeader.setText("View All");
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setTextSize(14);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
 
 
         // Listview Group click listener
@@ -516,19 +631,16 @@ public class MainActivity extends Activity {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-
+/*
 
                 Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Expanded",
                         Toast.LENGTH_SHORT).show();
-
+*/
                 setListViewHeightBasedOnItems(xboxoneExpListView);
 
 
-                TextView textHeader = (TextView)xboxoneExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-                textHeader.setText("View All");
-                textHeader.postInvalidate();
+                mHandler.postDelayed(mUpdateUITimerTaskXbox, 500);
 
                 steamExpListView.collapseGroup(0);
                 originExpListView.collapseGroup(0);
@@ -553,15 +665,11 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
             */
 
-                TextView textHeader = (TextView)xboxoneExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.LEFT);
-                textHeader.setTextSize(18);
-                //textHeader.setPadding(35, 10, 0, 10);
-                textHeader.setText("All Games");
+               // mHandler2.postDelayed(mUpdateUITimerTask2, 10);
 
 
                 setListViewHeightBasedOnItems(xboxoneExpListView);
-
+                mHandler.postDelayed(mUpdateUITimerTaskXbox2,500);
             /*
             TextView textHeader = (TextView)xboxoneExpListView.findViewById(R.id.textView5);
             textHeader.setTypeface(null, Typeface.BOLD);
@@ -582,6 +690,7 @@ public class MainActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
+                /*
                 Toast.makeText(
                         getApplicationContext(),
                         listDataHeader.get(groupPosition)
@@ -590,6 +699,7 @@ public class MainActivity extends Activity {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                        */
                 return false;
             }
         });
@@ -606,6 +716,36 @@ public class MainActivity extends Activity {
         // setting list adapter
         macSteamExpListView.setAdapter(listAdapter);
 
+        final Runnable mUpdateUITimerTaskMacSteam = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) macSteamExpListView.findViewById(R.id.textView5);
+                textHeader.setText("All Games");
+                textHeader.setGravity(Gravity.LEFT);
+                textHeader.setTextSize(18);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
+        final Runnable mUpdateUITimerTaskMacSteam2 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) macSteamExpListView.findViewById(R.id.textView5);
+                textHeader.setText("View All");
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setTextSize(14);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
 
         // Listview Group click listener
         macSteamExpListView.setOnGroupClickListener(new OnGroupClickListener() {
@@ -626,18 +766,15 @@ public class MainActivity extends Activity {
             @Override
             public void onGroupExpand(int groupPosition) {
 
-
+/*
                 Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Expanded",
                         Toast.LENGTH_SHORT).show();
-
+*/
                 setListViewHeightBasedOnItems(macSteamExpListView);
 
 
-                TextView textHeader = (TextView)macSteamExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-                textHeader.setText("View All");
-                textHeader.postInvalidate();
+                mHandler.postDelayed(mUpdateUITimerTaskMacSteam, 500);
 
                 steamExpListView.collapseGroup(0);
                 originExpListView.collapseGroup(0);
@@ -662,14 +799,11 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
             */
 
-                TextView textHeader = (TextView)macSteamExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.LEFT);
-                textHeader.setTextSize(18);
-                //textHeader.setPadding(35, 10, 0, 10);
-                textHeader.setText("All Games");
+                //mHandler2.postDelayed(mUpdateUITimerTask2, 10);
 
 
                 setListViewHeightBasedOnItems(macSteamExpListView);
+                mHandler.postDelayed(mUpdateUITimerTaskMacSteam2, 500);
 
             /*
             TextView textHeader = (TextView)macSteamExpListView.findViewById(R.id.textView5);
@@ -691,6 +825,7 @@ public class MainActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
+                /*
                 Toast.makeText(
                         getApplicationContext(),
                         listDataHeader.get(groupPosition)
@@ -699,6 +834,7 @@ public class MainActivity extends Activity {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                        */
                 return false;
             }
         });
@@ -715,6 +851,36 @@ public class MainActivity extends Activity {
         // setting list adapter
         macOtherExpListView.setAdapter(listAdapter);
 
+        final Runnable mUpdateUITimerTaskMacOther = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) macOtherExpListView.findViewById(R.id.textView5);
+                textHeader.setText("All Games");
+                textHeader.setGravity(Gravity.LEFT);
+                textHeader.setTextSize(18);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
+        final Runnable mUpdateUITimerTaskMacOther2 = new Runnable() {
+            public void run() {
+                // do whatever you want to change here, like:\
+
+                TextView textHeader = (TextView) macOtherExpListView.findViewById(R.id.textView5);
+                textHeader.setText("View All");
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setTextSize(14);
+                /*
+                TextView textHeader = (TextView) steamExpListView.findViewById(R.id.textView5);
+                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
+                textHeader.setText("TEST");
+                 */
+            }
+        };
 
         // Listview Group click listener
         macOtherExpListView.setOnGroupClickListener(new OnGroupClickListener() {
@@ -735,18 +901,15 @@ public class MainActivity extends Activity {
             @Override
             public void onGroupExpand(int groupPosition) {
 
-
+/*
                 Toast.makeText(getApplicationContext(),
                         listDataHeader.get(groupPosition) + " Expanded",
                         Toast.LENGTH_SHORT).show();
-
+*/
                 setListViewHeightBasedOnItems(macOtherExpListView);
 
 
-                TextView textHeader = (TextView)macOtherExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.CENTER_HORIZONTAL);
-                textHeader.setText("View All");
-                textHeader.postInvalidate();
+                mHandler.postDelayed(mUpdateUITimerTaskMacOther, 500);
 
                 steamExpListView.collapseGroup(0);
                 originExpListView.collapseGroup(0);
@@ -771,14 +934,11 @@ public class MainActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
             */
 
-                TextView textHeader = (TextView)macOtherExpListView.findViewById(R.id.textView5);
-                textHeader.setGravity(Gravity.LEFT);
-                textHeader.setTextSize(18);
-                //textHeader.setPadding(35, 10, 0, 10);
-                textHeader.setText("All Games");
+                //mHandler2.postDelayed(mUpdateUITimerTask2, 10);
 
 
                 setListViewHeightBasedOnItems(macOtherExpListView);
+                mHandler.postDelayed(mUpdateUITimerTaskMacOther2, 500);
 
             /*
             TextView textHeader = (TextView)macOtherExpListView.findViewById(R.id.textView5);
@@ -800,6 +960,7 @@ public class MainActivity extends Activity {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
+                /*
                 Toast.makeText(
                         getApplicationContext(),
                         listDataHeader.get(groupPosition)
@@ -808,6 +969,7 @@ public class MainActivity extends Activity {
                                 listDataHeader.get(groupPosition)).get(
                                 childPosition), Toast.LENGTH_SHORT)
                         .show();
+                        */
                 return false;
             }
         });
